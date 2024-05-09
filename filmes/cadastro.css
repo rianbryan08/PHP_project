@@ -1,0 +1,22 @@
+
+.name {
+    text-align: center;
+    font-size: 150%;
+}
+
+.f1{
+    width: 400px;
+    height: 100px;
+
+}
+.filmes{
+    width: 200px;
+    height: 400px;
+    float: left;    
+}
+
+.tbl {
+    width: 900px;
+    height: 400px;
+    padding-left: 450px;
+}

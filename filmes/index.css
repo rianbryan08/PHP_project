@@ -1,0 +1,20 @@
+body{
+    background-image: url("../imagens/pipoca.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 90%;
+    height: 90%;
+}
+
+.h1 {
+    text-align: center;
+}
+
+.login{
+    text-align: center;
+    padding-right: 55px;
+}
+
+.passbox{
+    padding-left: 15px;
+}
