@@ -1,4 +1,11 @@
-
+/*body{
+    background-image: url("../imagens/fundo2.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 90%;
+    height: 90%;
+}
+*/
 .name {
     text-align: center;
     font-size: 150%;

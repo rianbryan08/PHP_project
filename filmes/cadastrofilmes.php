@@ -16,31 +16,41 @@ $result = $conn->query($sql);
     </div>
     <title>Cadastro de Filmes</title>
     <script>
-        <?php
-        if (isset($_GET['resposta']) && $_GET['resposta'] == 1) {
-        ?>alert("incluido com sucesso");
-        <?php
-        } else if (isset($_GET['resposta']) && $_GET['resposta'] == 0) {
-        ?>alert("erro ao inserir");
-        <?php
-        } ?>
-    </script>
-    <title>Cadastro de Gênero</title>
-    <script>
-        <?php
-        if (isset($_GET['resposta']) && $_GET['resposta'] == 1) {
-        ?>alert("incluido com sucesso");
-        <?php
-        } else if (isset($_GET['resposta']) && $_GET['resposta'] == 0) {
-        ?>alert("erro ao inserir");
-        <?php
-        } ?>
-    </script>
+        function troca(filme) {
+            document.getElementById("titulo_" + filme).style.display = 'none';
+            document.getElementById("tituloE_" + filme).style.display = '';
+            document.getElementById("ano_" + filme).style.display = 'none';
+            document.getElementById("anoE_" + filme).style.display = '';
+            document.getElementById("editar_" + filme).style.display = 'none';
+            document.getElementById("salvar_" + filme).style.display = '';
+        }
 
-    <link rel="stylesheet" type="text/css" href="cadastro.css" />
+        <?php
+        if (isset($_GET['resposta']) && $_GET['resposta'] == 1) {
+        ?>alert("incluido com sucesso");
+        <?php
+        } else if (isset($_GET['resposta']) && $_GET['resposta'] == 0) {
+        ?>alert("erro ao inserir");
+        <?php
+        } else if (isset($_GET['resposta']) && $_GET['resposta'] == 3) {
+        ?>alert("excluído com sucesso");
+        <?php
+        } else if (isset($_GET['resposta']) && $_GET['resposta'] == 4) {
+        ?>alert("erro ao excluir");
+        <?php
+        } else if (isset($_GET['resposta']) && $_GET['resposta'] == 5) {
+        ?>alert("aditado com sucesso");
+        <?php
+        } else if (isset($_GET['resposta']) && $_GET['resposta'] == 6) {
+        ?>alert("erro ao editar");
+        <?php
+        } ?>
+    </script>
+    <link rel="stylesheet" href="cadastro.css" />
 </head>
 
 <body>
+
     <br><br>
     <div class='f1'>
         <div class='filmes'>
@@ -73,6 +83,7 @@ $result = $conn->query($sql);
                     <th>Gênero</th>
                     <th>Título</th>
                     <th>Ano</th>
+                    <th>Salvar/Editar</th>
                     <th>Excluir</th>
                 </tr>
                 <?php if ($result->num_rows > 0) { ?>
@@ -83,6 +94,7 @@ $result = $conn->query($sql);
                                 $sqlGeneros = "select genero, descricao from generos where status = 1";
                                 $result = $conn->query($sqlGeneros);
                                 ?>
+                                <form action="alterar.php" method="post" name="form_<?= $row->filme; ?>"></form>
                                 <select name="genero" id="genero">
                                     <option value="">selecione uma opção</option>
                                     <?php
@@ -92,12 +104,25 @@ $result = $conn->query($sql);
                                     <?php       } ?>
                                 </select>
                             </td>
-                            <td><?php echo htmlspecialchars($row->titulo); ?></td>
-                            <td><?php echo htmlspecialchars($row->ano); ?></td>
-                            <td><form action="deletar.php" method="post">
-                                <input type="hidden" name="filme" value=<?=$row->filme;?>>
-                                <input type="submit" value="Excluir">
-                            </form></td>
+                            <td>
+                                <div id="tituloE_<?= $row->filme; ?>" style="display: none;"><input name="titulo" type="text" value="<?php echo htmlspecialchars($row->titulo); ?>"></input></div>
+                                <div id="titulo_<?= $row->filme; ?>"><?php echo htmlspecialchars($row->titulo); ?></div>
+                            </td>
+                            <td>
+                                <div id="anoE_<?= $row->filme; ?>" style="display: none;"><input name="ano" type="text" value="<?php echo htmlspecialchars($row->ano); ?>"></input></div>
+                                <div id="ano_<?= $row->filme; ?>"><?php echo htmlspecialchars($row->ano); ?></div>
+                            </td>
+                            <td>
+                                <div id="editar_<?= $row->filme; ?>" style="cursor:pointer;" onclick="troca(<?= $row->filme; ?>);">Editar</div>
+                                <div id="salvar_<?= $row->filme; ?>" style="cursor:pointer; display:none;" onclick="document.form_<?= $row->filme; ?>.submit()">Salvar</div>
+                            </td>
+                            <input type="hidden" name="filme" value="<?= $row->filmes; ?>">
+                            <td>
+                                <form action="deletar.php" method="post">
+                                    <input type="hidden" name="filme" value=<?= $row->filme; ?>>
+                                    <input type="submit" value="Excluir">
+                                </form>
+                            </td>
                         </tr>
 
                     <?php
