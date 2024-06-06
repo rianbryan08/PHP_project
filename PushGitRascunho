@@ -1,0 +1,5 @@
+Push do Git
+cd (pasta)
+git add .
+git commit -m "mensagem"  
+git push
